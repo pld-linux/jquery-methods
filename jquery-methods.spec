@@ -30,6 +30,24 @@ history to github for future hosting and development.
 %setup -qc
 mv *-jquery-methods-*/* .
 
+convert() {
+	iconv -f$1 -tutf8 $2 > $2.tmp
+	touch -r $2 $2.tmp
+	mv $2.tmp $2
+}
+
+# we want everything utf8
+mv date_be_utf8.js date_bg.js
+mv date_ua_utf8.js date_ua.js
+mv date_ru_utf8.js date_ru.js
+rm date_ru_win1251.js
+convert latin1 date_da.js
+convert latin1 date_se.js
+mv date_se.js date_sv.js
+mv date_cz.js date_cs.js
+
+# NOTE: de, es, fr, it seems corrupted (or my terminal is)
+
 %build
 install -d build
 
@@ -62,8 +80,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/string.js
 
 # localized
-%lang(bg) %{_appdir}/date_be_utf8.js
-%lang(cs) %{_appdir}/date_cz.js
+%lang(bg) %{_appdir}/date_bg.js
+%lang(cs) %{_appdir}/date_cs.js
 %lang(da) %{_appdir}/date_da.js
 %lang(de) %{_appdir}/date_de.js
 %lang(el) %{_appdir}/date_el.js
@@ -76,9 +94,8 @@ rm -rf $RPM_BUILD_ROOT
 %lang(nb) %{_appdir}/date_no.js
 %lang(pl) %{_appdir}/date_pl.js
 %lang(pt_BR) %{_appdir}/date_pt-br.js
-%lang(ru) %{_appdir}/date_ru_utf8.js
-%lang(ru) %{_appdir}/date_ru_win1251.js
-%lang(sv) %{_appdir}/date_se.js
+%lang(ru) %{_appdir}/date_ru.js
+%lang(sv) %{_appdir}/date_sv.js
 %lang(si) %{_appdir}/date_si.js
 %lang(tr) %{_appdir}/date_tr.js
-%lang(ua) %{_appdir}/date_ua_utf8.js
+%lang(ua) %{_appdir}/date_ua.js
